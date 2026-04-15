@@ -1,8 +1,11 @@
 /* Design System & Variables */
 :root {
-    --primary-color: #00ff88; /* Neon pitch green */
-    --secondary-color: #ff0055; /* Arcade pink/red */
-    --accent-color: #00d4ff; /* Electric blue */
+    --primary-color: #00ff88;
+    /* Neon pitch green */
+    --secondary-color: #ff0055;
+    /* Arcade pink/red */
+    --accent-color: #00d4ff;
+    /* Electric blue */
     --bg-dark: #0a0a0c;
     --bg-surface: #1a1a20;
     --text-main: #ffffff;
@@ -28,7 +31,10 @@ body {
 }
 
 /* Base Styles */
-h1, h2, h3, .retro-text {
+h1,
+h2,
+h3,
+.retro-text {
     font-family: var(--retro-font);
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -101,7 +107,7 @@ nav {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('hero_background.webp');
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('hero_background.webp');
     background-size: cover;
     background-position: center;
     padding: 0 5%;
@@ -117,8 +123,13 @@ nav {
 }
 
 @keyframes glow {
-    from { text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color); }
-    to { text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color); }
+    from {
+        text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+    }
+
+    to {
+        text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
+    }
 }
 
 .hero p {
@@ -171,14 +182,13 @@ section {
     gap: 3rem;
 }
 
-.video-wrapper {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    border: 3px solid var(--glass-border);
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 
 .video-wrapper iframe {
@@ -224,7 +234,7 @@ section {
     padding: 3rem;
     border-radius: 15px;
     border: 1px solid var(--glass-border);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .form-group {
@@ -239,7 +249,8 @@ section {
     color: var(--text-muted);
 }
 
-.form-group input, .form-group textarea {
+.form-group input,
+.form-group textarea {
     width: 100%;
     padding: 1rem;
     background: #000;
@@ -249,7 +260,8 @@ section {
     font-family: var(--body-font);
 }
 
-.form-group input:focus, .form-group textarea:focus {
+.form-group input:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
 }
@@ -326,7 +338,15 @@ footer {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .hero h1 { font-size: 2rem; }
-    .nav-links { display: none; }
-    section { padding: 60px 5%; }
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    section {
+        padding: 60px 5%;
+    }
 }
