@@ -20,31 +20,78 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Handle Contact Form Submission
+    // Handle Contact Form Submission with Captcha
     const contactForm = document.getElementById('contact-form');
+    const captchaQuestionElement = document.getElementById('captcha-question');
+    const captchaInput = document.getElementById('captcha');
+    const submitBtn = contactForm.querySelector('.btn-submit');
+    const originalText = submitBtn.innerText;
+
+    let captchaAnswer = 0;
+
+    const generateCaptcha = () => {
+        const num1 = Math.floor(Math.random() * 10) + 1;
+        const num2 = Math.floor(Math.random() * 10) + 1;
+        captchaAnswer = num1 + num2;
+        if (captchaQuestionElement) {
+            captchaQuestionElement.innerText = `${num1} + ${num2} = ?`;
+        }
+    };
+
     if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
+        generateCaptcha();
+
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            // Validate Captcha
+            if (parseInt(captchaInput.value) !== captchaAnswer) {
+                alert('Robot check failed! Please try again.');
+                generateCaptcha();
+                captchaInput.value = '';
+                return;
+            }
+
             // Get form data
             const formData = new FormData(contactForm);
-            const data = Object.fromEntries(formData.entries());
             
-            console.log('Form Submitted:', data);
-            
-            // Show success message (styled like a retro alert)
-            const submitBtn = contactForm.querySelector('.btn-submit');
-            const originalText = submitBtn.innerText;
-            
-            submitBtn.innerText = 'SENT!';
-            submitBtn.style.backgroundColor = '#00d4ff';
-            
-            contactForm.reset();
-            
-            setTimeout(() => {
-                submitBtn.innerText = originalText;
-                submitBtn.style.backgroundColor = '';
-            }, 3000);
+            // UI Feedback
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'SENDING...';
+
+            try {
+                const response = await fetch(contactForm.getAttribute('action'), {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    // Success UI
+                    submitBtn.innerText = 'SENT! 🎉';
+                    submitBtn.style.backgroundColor = '#00d4ff';
+                    contactForm.reset();
+                    generateCaptcha();
+                    
+                    setTimeout(() => {
+                        submitBtn.innerText = originalText;
+                        submitBtn.style.backgroundColor = '';
+                        submitBtn.disabled = false;
+                    }, 5000);
+                } else {
+                    throw new Error('Form submission failed.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Oops! There was a problem sending your message. Please try again later.');
+                submitBtn.innerText = 'ERROR';
+                submitBtn.disabled = false;
+                setTimeout(() => {
+                    submitBtn.innerText = originalText;
+                }, 3000);
+            }
         });
     }
 

@@ -69,7 +69,11 @@
     <section id="contact">
         <h2 class="section-title">CONTACT</h2>
         <div class="contact-container">
-            <form id="contact-form">
+            <form id="contact-form" action="https://formspree.io/f/xrerpozy" method="POST">
+                <!-- Honeypot field (invisible to users, catches simple bots) -->
+                <div style="display:none;">
+                    <input type="text" name="_gotcha">
+                </div>
                 <div class="form-group">
                     <label for="name">NAME</label>
                     <input type="text" id="name" name="name" placeholder="Your name..." required>
@@ -82,6 +86,10 @@
                     <label for="message">MESSAGE</label>
                     <textarea id="message" name="message" rows="5" placeholder="What can we help you with?"
                         required></textarea>
+                </div>
+                <div class="form-group captcha-group">
+                    <label id="captcha-label" for="captcha">ROBOT CHECK: <span id="captcha-question">...</span></label>
+                    <input type="number" id="captcha" name="captcha" placeholder="Answer..." required>
                 </div>
                 <button type="submit" class="btn btn-submit">SEND MESSAGE</button>
             </form>
